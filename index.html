@@ -572,7 +572,7 @@
             <section id="projects" class="projects">
                 <div class="project-card">
                     <h3>个人博客系统</h3>
-                    <p>���刚建站，懒得写</p>
+                    <p>刚建站，懒得写</p>
                 </div>
             </section>
 
@@ -682,6 +682,18 @@
 
                     // 保存对话到 localStorage
                     saveChat(message, aiResponse);
+                    
+                    // 记录对话
+                    fetch('/log_chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_message: message,
+                            ai_message: aiResponse
+                        })
+                    });
                     
                 } catch (error) {
                     loadingDiv.classList.remove('loading');
