@@ -151,8 +151,55 @@
         /* 移动端适配 */
         @media (max-width: 768px) {
             .sidebar {
-                height: 500px;  /* 移动端固定高度 */
+                width: 100%;
+                height: 80vh;  /* 改为视窗高度的80% */
+                min-height: 600px;  /* 设置最小高度 */
                 position: static;
+                margin-top: 1rem;
+            }
+
+            /* 优化聊天消息区域 */
+            .chat-messages {
+                padding: 2rem 1rem 1rem;
+                font-size: 1rem;  /* 增大字体 */
+            }
+
+            /* 调整消息气泡间距 */
+            .message {
+                margin-bottom: 2rem;  /* 增加消息间距 */
+                padding: 1.2rem;  /* 增加内边距 */
+            }
+
+            /* 调整输入框 */
+            .chat-input {
+                padding: 1rem;
+            }
+
+            .chat-input textarea {
+                min-height: 60px;  /* 增加输入框高度 */
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+
+            .chat-input button {
+                height: 45px;  /* 增加按钮高度 */
+                font-size: 1rem;
+            }
+        }
+
+        /* 处理特别小的屏幕 */
+        @media (max-width: 320px) {
+            .sidebar {
+                height: 70vh;  /* 稍微减小高度 */
+                min-height: 500px;
+            }
+        }
+
+        /* 处理较高的手机屏幕 */
+        @media (min-height: 700px) and (max-width: 768px) {
+            .sidebar {
+                height: 70vh;  /* 在较高的屏幕上使用更合适的高度 */
+                min-height: 700px;
             }
         }
 
@@ -525,7 +572,7 @@
             <section id="projects" class="projects">
                 <div class="project-card">
                     <h3>个人博客系统</h3>
-                    <p>刚刚建站，懒得写</p>
+                    <p>���刚建站，懒得写</p>
                 </div>
             </section>
 
@@ -580,6 +627,9 @@
             if (message) {
                 const chatMessages = document.querySelector('.chat-messages');
                 
+                // 记录对话到控制台
+                console.log('用户: ' + message);
+                
                 // 添加用户消息
                 const userDiv = document.createElement('div');
                 userDiv.className = 'message user-message';
@@ -617,14 +667,22 @@
                     
                     const data = await response.json();
                     
+                    let aiResponse = '';
                     if (data.error) {
-                        loadingDiv.textContent = '错误: ' + data.error.message;
+                        aiResponse = '错误: ' + data.error.message;
                     } else {
-                        loadingDiv.textContent = data.choices[0].message.content;
+                        aiResponse = data.choices[0].message.content;
                     }
                     
-                    // 移除loading类
+                    // 记录 AI 回复到控制台
+                    console.log('Alan-2077: ' + aiResponse);
+                    
+                    loadingDiv.textContent = aiResponse;
                     loadingDiv.classList.remove('loading');
+
+                    // 保存对话到 localStorage
+                    saveChat(message, aiResponse);
+                    
                 } catch (error) {
                     loadingDiv.classList.remove('loading');
                     loadingDiv.textContent = '连接出错，请稍后再试: ' + error.message;
@@ -634,6 +692,28 @@
                 textarea.value = '';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
+        }
+
+        // 添加保存对话的函数
+        function saveChat(userMessage, aiResponse) {
+            let chats = JSON.parse(localStorage.getItem('chats') || '[]');
+            chats.push({
+                timestamp: new Date().toISOString(),
+                user: userMessage,
+                ai: aiResponse
+            });
+            localStorage.setItem('chats', JSON.stringify(chats));
+        }
+
+        // 添加查看历史对话的函数
+        function viewChatHistory() {
+            const chats = JSON.parse(localStorage.getItem('chats') || '[]');
+            console.log('=== 对话历史 ===');
+            chats.forEach((chat, index) => {
+                console.log(`\n对话 ${index + 1} - ${new Date(chat.timestamp).toLocaleString()}`);
+                console.log('用户: ' + chat.user);
+                console.log('Alan-2077: ' + chat.ai);
+            });
         }
 
         // 监听窗口大小变化，调整聊天区域高度
