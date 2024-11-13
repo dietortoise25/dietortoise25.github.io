@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             color: #333;
-            background: url('images/blackhole.jpg') no-repeat center center fixed;
+            background: url('images/blackhole.png') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
@@ -148,6 +148,18 @@
             -webkit-text-fill-color: transparent;
             text-shadow: none;
         }
+
+        /* 联系方式链接样式 */
+        #contact a {
+            color: #4169E1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        #contact a:hover {
+            color: #1e90ff;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -161,23 +173,24 @@
 
     <div class="container">
         <section id="home" class="profile">
-            <h1>欢迎来到我的个人网站</h1>
-            <p>这里是你的个人简介</p>
+            <h1>欢迎来到我的宇宙</h1>
+            <p>这里是一个热爱探索的灵魂栖息地</p>
         </section>
 
         <section id="about">
             <h2>关于我</h2>
-            <p>在这里介绍你自己，包括你的技能、经历和兴趣爱好。</p>
+            <p>我是一个热爱科技和创新的开发者，对人工智能和宇宙探索充满热情。
+               在这里，我会分享我的学习心得、项目经验和对未来科技的思考。</p>
         </section>
 
         <section id="projects" class="projects">
             <div class="project-card">
-                <h3>项目一</h3>
-                <p>项目描述...</p>
+                <h3>AI对话机器人</h3>
+                <p>基于最新AI技术开发的智能对话系统，能够理解和回应复杂的人类语言。</p>
             </div>
             <div class="project-card">
-                <h3>项目二</h3>
-                <p>项目描述...</p>
+                <h3>个人博客系统</h3>
+                <p>使用现代Web技术构建的博客平台，支持Markdown编写和实时预览。</p>
             </div>
         </section>
 
@@ -191,8 +204,9 @@
 
         <section id="contact">
             <h2>联系方式</h2>
-            <p>邮箱：your.email@example.com</p>
-            <p>社交媒体链接...</p>
+            <p>邮箱：<a href="mailto:156725927@qq.com">156725927@qq.com</a></p>
+            <p>微信：kamicj</p>
+            <p>GitHub：<a href="https://github.com/你的GitHub用户名">你的GitHub用户名</a></p>
         </section>
     </div>
 </body>
