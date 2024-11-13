@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>我的个人网站</title>
     <style>
         /* 基础样式 */
@@ -12,9 +12,7 @@
             margin: 0;
             padding: 0;
             color: #333;
-            background: url('images/blackhole.png') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
+            background-color: #000; /* 黑色背景 */
         }
 
         /* 添加半透明遮罩，确保文字清晰可读 */
@@ -33,9 +31,11 @@
         .container {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
         }
 
         nav {
@@ -130,6 +130,7 @@
         /* 调整卡片背景色为半透明 */
         .project-card, article, #contact {
             background-color: rgba(255, 255, 255, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
 
@@ -160,9 +161,284 @@
             color: #1e90ff;
             text-decoration: underline;
         }
+
+        /* 图片加载样式 */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/blackhole.jpg') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: -1;
+        }
+
+        .bg-image.loaded {
+            opacity: 1;
+        }
+
+        /* 聊天界面样式 */
+        .chat-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            margin: 2rem 0;
+            padding: 1rem;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-messages {
+            height: calc(100vh - 250px);  /* 动态计算高度 */
+            overflow-y: auto;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;  /* Firefox */
+            scrollbar-color: #4169E1 #f0f0f0;  /* Firefox */
+        }
+
+        /* Webkit浏览器的滚动条样式 */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #4169E1;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #1e90ff;
+        }
+
+        /* 消息样式优化 */
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 80%;
+            word-wrap: break-word;  /* 确保长文本正确换行 */
+        }
+
+        .user-message {
+            background-color: #4169E1;
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input textarea {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .chat-input button {
+            padding: 0 1.5rem;
+            background-color: #4169E1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #1e90ff;
+        }
+
+        /* 左侧主要内容区域 */
+        .main-content {
+            flex: 1;
+            min-width: 0; /* 防止内容溢出 */
+        }
+
+        /* 右侧AI助手区域 */
+        .sidebar {
+            width: 400px;
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;  /* 防止内容溢出 */
+        }
+
+        /* 调整聊天容器样式 */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            height: 100%;  /* 占满整个sidebar高度 */
+            overflow: hidden;  /* 防止内容溢出 */
+        }
+
+        /* 修改聊天消息区域样式 */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;  /* 允许垂直滚动 */
+            padding: 1rem;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: #4169E1 #f0f0f0;
+            height: calc(100% - 100px);  /* 减去输入框的高度 */
+        }
+
+        /* 固定输入框在底部 */
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #ddd;
+            height: 80px;  /* 固定输入框高度 */
+            min-height: 80px;  /* 确保最小高度 */
+        }
+
+        /* 响应式布局调整 */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 600px;  /* 在移动设备上设置固定高度 */
+                position: static;
+            }
+
+            .chat-messages {
+                height: calc(100% - 100px);
+            }
+        }
+
+        /* 修改容器样式，适应移动端 */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem;  /* 减小内边距 */
+            display: flex;
+            gap: 1rem;  /* 减小间距 */
+        }
+
+        /* 导航栏移动端适配 */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.5rem;
+                overflow-x: auto;  /* 允许横向滚动 */
+                white-space: nowrap;
+            }
+
+            nav a {
+                padding: 0.5rem;
+                margin-right: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 移动端布局调整 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+            
+            .main-content {
+                width: 100%;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 500px;  /* 移动端上的固定高度 */
+                position: static;
+                margin-top: 1rem;
+            }
+
+            .project-card {
+                padding: 1rem;
+            }
+
+            .chat-messages {
+                height: 350px;  /* 移动端上的消息区域高度 */
+            }
+
+            .chat-input {
+                height: 60px;  /* 减小输入框高度 */
+                min-height: 60px;
+                padding: 0.5rem;
+            }
+
+            .chat-input textarea {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .chat-input button {
+                padding: 0 1rem;
+                font-size: 0.9rem;
+            }
+
+            /* 调整文字大小 */
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.5em; }
+            h3 { font-size: 1.2em; }
+            p { font-size: 0.9em; }
+        }
+
+        /* 处理特别窄的屏幕 */
+        @media (max-width: 320px) {
+            .container {
+                padding: 0.3rem;
+            }
+
+            nav a {
+                padding: 0.3rem;
+                margin-right: 5px;
+                font-size: 0.8rem;
+            }
+
+            .chat-input {
+                height: 50px;
+                gap: 0.5rem;
+            }
+        }
+
+        /* 优化触摸体验 */
+        @media (hover: none) {
+            .chat-input button {
+                min-height: 44px;  /* 确保触摸目标足够大 */
+            }
+
+            nav a {
+                min-height: 44px;
+                line-height: 44px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="bg-image"></div>
     <nav>
         <a href="#home">首页</a>
         <a href="#about">关于我</a>
@@ -172,42 +448,133 @@
     </nav>
 
     <div class="container">
-        <section id="home" class="profile">
-            <h1>欢迎来到我的宇宙</h1>
-            <p>这里是一个热爱探索的灵魂栖息地</p>
-        </section>
+        <div class="main-content">
+            <section id="home" class="profile">
+                <h1>欢迎来到我的宇宙</h1>
+                <p>这里是一个热爱探索的灵魂栖息地</p>
+            </section>
 
-        <section id="about">
-            <h2>关于我</h2>
-            <p>我是一个热爱科技和创新的开发者，对人工智能和宇宙探索充满热情。
-               在这里，我会分享我的学习心得、项目经验和对未来科技的思考。</p>
-        </section>
+            <section id="about">
+                <h2>关于我</h2>
+                <p>我是一个热爱科技和创新的开发者，对人工智能和宇宙探索充满热情。
+                   在这里，我会分享我的学习心得、项目经验和对未来科技的思考。</p>
+            </section>
 
-        <section id="projects" class="projects">
-            <div class="project-card">
-                <h3>AI对话机器人</h3>
-                <p>基于最新AI技术开发的智能对话系统，能够理解和回应复杂的人类语言。</p>
+            <section id="projects" class="projects">
+                <div class="project-card">
+                    <h3>AI对话机器人</h3>
+                    <p>基于最新AI技术开发的智能对话系统，能够理解和回应复杂的人类语言。</p>
+                </div>
+                <div class="project-card">
+                    <h3>个人博客系统</h3>
+                    <p>使用现代Web技术构建的博客平台，支持Markdown编写和实时预览。</p>
+                </div>
+            </section>
+
+            <section id="blog">
+                <h2>最新博客</h2>
+                <article>
+                    <h3>博客标题</h3>
+                    <p>博客摘要...</p>
+                </article>
+            </section>
+
+            <section id="contact">
+                <h2>联系方式</h2>
+                <p>邮箱：<a href="mailto:156725927@qq.com">156725927@qq.com</a></p>
+                <p>微信：kamicj</p>
+                <p>GitHub：<a href="https://github.com/你的GitHub用户名">你的GitHub用户名</a></p>
+            </section>
+        </div>
+
+        <div class="sidebar">
+            <h2>AI 助手</h2>
+            <div class="chat-container">
+                <div class="chat-messages">
+                    <div class="message bot-message">
+                        你好！我是你的 AI 助手，有什么我可以帮你的吗？
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <textarea 
+                        placeholder="输入你的问题..." 
+                        rows="3"
+                        onkeydown="if(event.keyCode === 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }">
+                    </textarea>
+                    <button onclick="sendMessage()">发送</button>
+                </div>
             </div>
-            <div class="project-card">
-                <h3>个人博客系统</h3>
-                <p>使用现代Web技术构建的博客平台，支持Markdown编写和实时预览。</p>
-            </div>
-        </section>
-
-        <section id="blog">
-            <h2>最新博客</h2>
-            <article>
-                <h3>博客标题</h3>
-                <p>博客摘要...</p>
-            </article>
-        </section>
-
-        <section id="contact">
-            <h2>联系方式</h2>
-            <p>邮箱：<a href="mailto:156725927@qq.com">156725927@qq.com</a></p>
-            <p>微信：kamicj</p>
-            <p>GitHub：<a href="https://github.com/你的GitHub用户名">你的GitHub用户名</a></p>
-        </section>
+        </div>
     </div>
+
+    <script>
+        window.onload = function() {
+            document.querySelector('.bg-image').classList.add('loaded');
+        }
+
+        async function sendMessage() {
+            const textarea = document.querySelector('.chat-input textarea');
+            const message = textarea.value.trim();
+            
+            if (message) {
+                const chatMessages = document.querySelector('.chat-messages');
+                
+                // 添加用户消息
+                const userDiv = document.createElement('div');
+                userDiv.className = 'message user-message';
+                userDiv.textContent = message;
+                chatMessages.appendChild(userDiv);
+                
+                // 添加加载提示
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message bot-message';
+                loadingDiv.textContent = '正在思考...';
+                chatMessages.appendChild(loadingDiv);
+                
+                try {
+                    const response = await fetch('https://openai.api2d.net/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer fk229595-bPNFFy2wP503du4C6dRnulPFFmlqqA9G'
+                        },
+                        body: JSON.stringify({
+                            "model": "gpt-3.5-turbo",
+                            "messages": [
+                                {
+                                    "role": "system",
+                                    "content": "你是一个友好的AI助手，用简短的语言回答问题。"
+                                },
+                                {
+                                    "role": "user",
+                                    "content": message
+                                }
+                            ]
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        loadingDiv.textContent = '错误: ' + data.error.message;
+                    } else {
+                        loadingDiv.textContent = data.choices[0].message.content;
+                    }
+                } catch (error) {
+                    loadingDiv.textContent = '连接出错，请稍后再试: ' + error.message;
+                }
+                
+                // 清空输入框并滚动到底部
+                textarea.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // 监听窗口大小变化，调整聊天区域高度
+        window.addEventListener('resize', function() {
+            const chatMessages = document.querySelector('.chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+    </script>
 </body>
 </html> 
