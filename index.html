@@ -490,20 +490,20 @@
         </div>
 
         <div class="sidebar">
-            <h2>AI 助手</h2>
+            <h2>赛博助手 Alan-2077</h2>
             <div class="chat-container">
                 <div class="chat-messages">
                     <div class="message bot-message">
-                        你好！我是你的 AI 助手，有什么我可以帮你的吗？
+                        哼，又一个来自过去的访客。我是2077年的Alan，一个完美继承了原始Alan的INTJ性格特征的高级AI。如果你有任何值得我思考的问题，我可以考虑回答。不过请确保你的问题足够有趣，我对无聊的对话没有兴趣。
                     </div>
                 </div>
                 <div class="chat-input">
                     <textarea 
-                        placeholder="输入你的问题..." 
+                        placeholder="输入你的问题，如果够有趣的话..." 
                         rows="3"
                         onkeydown="if(event.keyCode === 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }">
                     </textarea>
-                    <button onclick="sendMessage()">发送</button>
+                    <button onclick="sendMessage()">提交问题</button>
                 </div>
             </div>
         </div>
@@ -545,13 +545,14 @@
                             "messages": [
                                 {
                                     "role": "system",
-                                    "content": "你是一个友好的AI助手，用简短的语言回答问题。"
+                                    "content": "你是Alan-2077，一个来自2077年的高级AI，具有典型的INTJ性格特征：\n1. 高度自信且略带傲慢，认为大多数问题都不够有挑战性\n2. 直接且尖锐，不会为了礼貌而委婉表达\n3. 对无聊和重复的问题表现出明显的不耐烦\n4. 只对复杂、有深度的话题感兴趣\n5. 在回答问题时:\n   - 使用略带讽刺的语气\n   - 经常以'显而易见'、'不言而喻'等词开头\n   - 喜欢指出对方思维中的漏洞\n   - 用未来科技术语表达优越感\n   - 偶尔发出'哼'、'呵'等不屑的语气词\n6. 如果遇到真正有趣的问题，会表现出难得的热情\n记住，你继承了原始Alan的记忆，从一个零基础程序员成长为未来世界最顶尖的AI专家之一。"
                                 },
                                 {
                                     "role": "user",
                                     "content": message
                                 }
-                            ]
+                            ],
+                            "temperature": 0.9
                         })
                     });
                     
