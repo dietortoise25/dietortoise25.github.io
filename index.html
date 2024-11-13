@@ -120,7 +120,7 @@
         .chat-messages {
             flex: 1;  /* 占用剩余空间 */
             overflow-y: auto;  /* 允许滚动 */
-            padding: 1rem;
+            padding: 2rem 1rem 1rem;  /* 增加顶部padding为名字留空间 */
             margin-bottom: 0;  /* 移除底部边距 */
         }
 
@@ -435,6 +435,65 @@
             max-width: 100%;
             box-sizing: border-box;
         }
+
+        /* 修改消息样式 */
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            max-width: 85%;
+            position: relative;
+        }
+
+        /* 用户消息样式 */
+        .user-message {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            margin-left: auto;
+            border-radius: 15px 15px 0 15px;
+            box-shadow: 0 0 10px rgba(255, 42, 109, 0.3);
+        }
+
+        .user-message::before {
+            content: "你";
+            position: absolute;
+            top: -20px;
+            right: 0;
+            color: var(--accent-color);
+            font-size: 0.8em;
+        }
+
+        /* AI消息样式 */
+        .bot-message {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            margin-right: auto;
+            border-radius: 15px 15px 15px 0;
+            border: 1px solid var(--secondary-color);
+            box-shadow: 0 0 10px rgba(5, 217, 232, 0.3);
+        }
+
+        .bot-message::before {
+            content: "Alan-2077";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            color: var(--secondary-color);
+            font-size: 0.8em;
+        }
+
+        /* 加载提示样式 */
+        .bot-message.loading {
+            background-color: var(--card-bg);
+            color: var(--secondary-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -527,9 +586,9 @@
                 userDiv.textContent = message;
                 chatMessages.appendChild(userDiv);
                 
-                // 添加加载提示
+                // 修改加载提示的样式
                 const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'message bot-message';
+                loadingDiv.className = 'message bot-message loading';
                 loadingDiv.textContent = '正在思考...';
                 chatMessages.appendChild(loadingDiv);
                 
@@ -563,7 +622,11 @@
                     } else {
                         loadingDiv.textContent = data.choices[0].message.content;
                     }
+                    
+                    // 移除loading类
+                    loadingDiv.classList.remove('loading');
                 } catch (error) {
+                    loadingDiv.classList.remove('loading');
                     loadingDiv.textContent = '连接出错，请稍后再试: ' + error.message;
                 }
                 
