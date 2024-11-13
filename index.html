@@ -5,440 +5,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>我的个人网站</title>
     <style>
-        /* 基础样式 */
+        /* GitHub 风格的深色主题 */
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --border-color: #30363d;
+            --link-color: #58a6ff;
+            --header-bg: #161b22;
+            --card-bg: #21262d;
+        }
+
         body {
-            font-family: 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            color: #333;
-            background-color: #000; /* 黑色背景 */
-        }
-
-        /* 添加半透明遮罩，确保文字清晰可读 */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 0;
-        }
-
-        /* 确保内容在遮罩层之上 */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 1rem;
-            display: flex;
-            gap: 1rem;
         }
 
         nav {
-            position: relative;
-            z-index: 2;
-            background-color: rgba(65, 105, 225, 0.9);
+            background-color: var(--header-bg);
             padding: 1rem;
-            box-shadow: 0 2px 5px rgba(65, 105, 225, 0.2);
+            border-bottom: 1px solid var(--border-color);
         }
 
         nav a {
-            color: #F5F5F0;
+            color: var(--text-color);
             text-decoration: none;
             margin-right: 20px;
             padding: 5px 10px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            border-radius: 6px;
+            transition: background-color 0.2s;
         }
 
         nav a:hover {
-            background-color: rgba(245, 245, 240, 0.1);
+            background-color: var(--card-bg);
         }
 
-        /* 主要内容区域样式 */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-        }
-
-        /* 个人简介部分 */
-        .profile {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .profile h1 {
-            color: #4169E1;
-        }
-
-        /* 项目展示区域 */
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
             gap: 2rem;
         }
 
+        .main-content {
+            flex: 1;
+        }
+
+        .profile {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3 {
+            color: #ffffff;
+        }
+
         .project-card {
-            background-color: white;
-            border: 1px solid #E1E1E1;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
             padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(65, 105, 225, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.2);
+            transform: translateY(-2px);
         }
 
-        .project-card h3 {
-            color: #4169E1;
-            margin-top: 0;
-        }
-
-        /* 标题样式 */
-        h2 {
-            color: #4169E1;
-            border-bottom: 2px solid #4169E1;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* 博客文章卡片 */
-        article {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 5px rgba(65, 105, 225, 0.1);
-        }
-
-        /* 联系方式部分 */
-        #contact {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(65, 105, 225, 0.1);
-        }
-
-        /* 调整卡片背景色为半透明 */
-        .project-card, article, #contact {
-            background-color: rgba(255, 255, 255, 0.9);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-        }
-
-        /* 调整文字颜色，使其在深色背景上更清晰 */
-        .profile h1, h2, .profile p {
-            color: #F5F5F0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* 为标题添加特殊效果 */
-        .profile h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-            background: linear-gradient(45deg, #4169E1, #F5F5F0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none;
-        }
-
-        /* 联系方式链接样式 */
-        #contact a {
-            color: #4169E1;
+        a {
+            color: var(--link-color);
             text-decoration: none;
-            transition: color 0.3s;
         }
 
-        #contact a:hover {
-            color: #1e90ff;
+        a:hover {
             text-decoration: underline;
         }
 
-        /* 图片加载样式 */
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('images/blackhole.jpg') no-repeat center center fixed;
-            background-size: cover;
-            opacity: 0;
-            transition: opacity 0.5s;
-            z-index: -1;
+        /* AI助手样式 */
+        .sidebar {
+            width: 360px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
         }
 
-        .bg-image.loaded {
-            opacity: 1;
-        }
-
-        /* 聊天界面样式 */
         .chat-container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            margin: 2rem 0;
-            padding: 1rem;
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            height: 500px;
         }
 
         .chat-messages {
-            height: calc(100vh - 250px);  /* 动态计算高度 */
+            flex: 1;
             overflow-y: auto;
             padding: 1rem;
-            margin-bottom: 1rem;
-            scrollbar-width: thin;  /* Firefox */
-            scrollbar-color: #4169E1 #f0f0f0;  /* Firefox */
+            background-color: var(--bg-color);
         }
 
-        /* Webkit浏览器的滚动条样式 */
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f0f0f0;
-            border-radius: 4px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #4169E1;
-            border-radius: 4px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: #1e90ff;
-        }
-
-        /* 消息样式优化 */
         .message {
             margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            max-width: 80%;
-            word-wrap: break-word;  /* 确保长文本正确换行 */
+            padding: 0.8rem;
+            border-radius: 6px;
+            max-width: 85%;
         }
 
         .user-message {
-            background-color: #4169E1;
+            background-color: #238636;
             color: white;
             margin-left: auto;
         }
 
         .bot-message {
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
         }
 
         .chat-input {
-            display: flex;
-            gap: 1rem;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
         }
 
         .chat-input textarea {
-            flex: 1;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             resize: none;
-            font-family: inherit;
-            background: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
         }
 
         .chat-input button {
-            padding: 0 1.5rem;
-            background-color: #4169E1;
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #238636;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         .chat-input button:hover {
-            background-color: #1e90ff;
+            background-color: #2ea043;
         }
 
-        /* 左侧主要内容区域 */
-        .main-content {
-            flex: 1;
-            min-width: 0; /* 防止内容溢出 */
-        }
-
-        /* 右侧AI助手区域 */
-        .sidebar {
-            width: 400px;
-            position: sticky;
-            top: 2rem;
-            height: calc(100vh - 4rem);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;  /* 防止内容溢出 */
-        }
-
-        /* 调整聊天容器样式 */
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            height: 100%;  /* 占满整个sidebar高度 */
-            overflow: hidden;  /* 防止内容溢出 */
-        }
-
-        /* 修改聊天消息区域样式 */
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;  /* 允许垂直滚动 */
-            padding: 1rem;
-            margin-bottom: 1rem;
-            scrollbar-width: thin;
-            scrollbar-color: #4169E1 #f0f0f0;
-            height: calc(100% - 100px);  /* 减去输入框的高度 */
-        }
-
-        /* 固定输入框在底部 */
-        .chat-input {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-top: 1px solid #ddd;
-            height: 80px;  /* 固定输入框高度 */
-            min-height: 80px;  /* 确保最小高度 */
-        }
-
-        /* 响应式布局调整 */
-        @media (max-width: 1200px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: 600px;  /* 在移动设备上设置固定高度 */
-                position: static;
-            }
-
-            .chat-messages {
-                height: calc(100% - 100px);
-            }
-        }
-
-        /* 修改容器样式，适应移动端 */
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 1rem;  /* 减小内边距 */
-            display: flex;
-            gap: 1rem;  /* 减小间距 */
-        }
-
-        /* 导航栏移动端适配 */
-        @media (max-width: 768px) {
-            nav {
-                padding: 0.5rem;
-                overflow-x: auto;  /* 允许横向滚动 */
-                white-space: nowrap;
-            }
-
-            nav a {
-                padding: 0.5rem;
-                margin-right: 10px;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* 移动端布局调整 */
+        /* 移动端适配 */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
-                padding: 0.5rem;
-            }
-            
-            .main-content {
-                width: 100%;
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: 500px;  /* 移动端上的固定高度 */
-                position: static;
-                margin-top: 1rem;
-            }
-
-            .project-card {
                 padding: 1rem;
             }
 
-            .chat-messages {
-                height: 350px;  /* 移动端上的消息区域高度 */
-            }
-
-            .chat-input {
-                height: 60px;  /* 减小输入框高度 */
-                min-height: 60px;
-                padding: 0.5rem;
-            }
-
-            .chat-input textarea {
-                padding: 0.5rem;
-                font-size: 1rem;
-            }
-
-            .chat-input button {
-                padding: 0 1rem;
-                font-size: 0.9rem;
-            }
-
-            /* 调整文字大小 */
-            h1 { font-size: 1.8em; }
-            h2 { font-size: 1.5em; }
-            h3 { font-size: 1.2em; }
-            p { font-size: 0.9em; }
-        }
-
-        /* 处理特别窄的屏幕 */
-        @media (max-width: 320px) {
-            .container {
-                padding: 0.3rem;
-            }
-
-            nav a {
-                padding: 0.3rem;
-                margin-right: 5px;
-                font-size: 0.8rem;
-            }
-
-            .chat-input {
-                height: 50px;
-                gap: 0.5rem;
-            }
-        }
-
-        /* 优化触摸体验 */
-        @media (hover: none) {
-            .chat-input button {
-                min-height: 44px;  /* 确保触摸目标足够大 */
-            }
-
-            nav a {
-                min-height: 44px;
-                line-height: 44px;
+            .sidebar {
+                width: 100%;
+                position: static;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-image"></div>
     <nav>
         <a href="#home">首页</a>
         <a href="#about">关于我</a>
@@ -509,7 +246,7 @@
 
     <script>
         window.onload = function() {
-            document.querySelector('.bg-image').classList.add('loaded');
+            // 保留其他初始化代码（如果有的话）
         }
 
         async function sendMessage() {
