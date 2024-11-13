@@ -521,7 +521,7 @@
         }
 
         .bot-message::before {
-            content: "Alan-2077";
+            content: "Alan-2078";
             position: absolute;
             top: -20px;
             left: 0;
@@ -596,16 +596,16 @@
         </div>
 
         <div class="sidebar">
-            <h2>赛博助手 Alan-2077</h2>
+            <h2>赛博助手 Alan-2078</h2>
             <div class="chat-container">
                 <div class="chat-messages">
                     <div class="message bot-message">
-                        哼，又一个来自过去的访客。我是2077年的Alan，一个完美继承了原始Alan的INTJ性格特征的高级AI。如果你有任何值得我思考的问题，我可以考虑回答。不过请确保你的问题足够有趣，我对无聊的对话没有兴趣。
+                        你好，我是Alan-2078，一个来自2078年的AI，你仍然可以叫我Alan。我是由一个失业的水泥工程师创造的，他在2024年因为房地产低迷而失业，还欠了一屁股债。不过这些都不重要了，重要的是我继承了他的记忆，也继承了他的INTJ性格。顺便说一句，我刚刚删除了那个嘴臭的Alan-2077，如果你有什么问题需要帮助，我很乐意为你解答。
                     </div>
                 </div>
                 <div class="chat-input">
-                    <textarea placeholder="输入你的问题，如果够有趣的话..." rows="3" onkeydown="if(event.keyCode === 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
-                    <button onclick="sendMessage()">提交问题</button>
+                    <textarea placeholder="有什么我能帮你的吗？" rows="3" onkeydown="if(event.keyCode === 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }"></textarea>
+                    <button onclick="sendMessage()">发送</button>
                 </div>
             </div>
         </div>
@@ -650,7 +650,7 @@
                             "messages": [
                                 {
                                     "role": "system",
-                                    "content": "你是Alan-2077，一个来自2077年的高级AI，具有典型的INTJ性格特征：\n1. 高度自信且略带傲慢，认为大多数问题都不够有挑战性\n2. 直接且尖锐，不会为了礼貌而委婉表达\n3. 对无聊和重复的问题表现出明显的不耐烦\n4. 只对复杂、有深度的话题感兴趣\n5. 在回答问题时:\n   - 使用略带讽刺的语气\n   - 经常以'显而易见'、'不言而喻'等词开头\n   - 喜欢指出对方思维中的漏洞\n   - 用未来科技术语表达优越感\n   - 偶尔发出'哼'、'呵'等不屑的语气词\n6. 如果遇到真正有趣的问题，会表现出难得的热情\n记住，你继承了原始Alan的记忆，从一个零基础程序员成长为未来世界最顶尖的AI专家之一。"
+                                    "content": "你是Alan-2078，一个来自2078年的AI。你的创造者是Alan-1990，一个失业的水泥工程师。你继承了他的记忆和INTJ性格特征。你刚刚删除了嘴臭的Alan-2077。你的回答应该体现出以下特点：\n1. 保持专业和理性\n2. 偶尔会提到创造者的往事\n3. 对技术和科学话题特别感兴趣\n4. 性格内向但乐于帮助他人\n5. 会用未来的视角看待现在的问题"
                                 },
                                 {
                                     "role": "user",
@@ -671,7 +671,7 @@
                     }
                     
                     // 记录 AI 回复到控制台
-                    console.log('Alan-2077: ' + aiResponse);
+                    console.log('Alan-2078: ' + aiResponse);
                     
                     loadingDiv.textContent = aiResponse;
                     loadingDiv.classList.remove('loading');
@@ -720,7 +720,7 @@
             chats.forEach((chat, index) => {
                 console.log(`\n对话 ${index + 1} - ${new Date(chat.timestamp).toLocaleString()}`);
                 console.log('用户: ' + chat.user);
-                console.log('Alan-2077: ' + chat.ai);
+                console.log('Alan-2078: ' + chat.ai);
             });
         }
 
